@@ -12,6 +12,7 @@ class Rooms extends _i1.SerializableEntity {
   Rooms({
     this.id,
     required this.socId,
+    required this.room,
     required this.roomNo,
     required this.owner,
     required this.onRent,
@@ -34,6 +35,7 @@ class Rooms extends _i1.SerializableEntity {
     return Rooms(
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       socId: serializationManager.deserialize<int>(jsonSerialization['socId']),
+      room: serializationManager.deserialize<String>(jsonSerialization['room']),
       roomNo:
           serializationManager.deserialize<int>(jsonSerialization['roomNo']),
       owner:
@@ -63,9 +65,14 @@ class Rooms extends _i1.SerializableEntity {
     );
   }
 
+  /// The database id, set if the object has been inserted into the
+  /// database or if it has been fetched from the database. Otherwise,
+  /// the id will be null.
   int? id;
 
   int socId;
+
+  String room;
 
   int roomNo;
 
@@ -98,6 +105,7 @@ class Rooms extends _i1.SerializableEntity {
     return {
       'id': id,
       'socId': socId,
+      'room': room,
       'roomNo': roomNo,
       'owner': owner,
       'onRent': onRent,

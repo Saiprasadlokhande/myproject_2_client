@@ -7,6 +7,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 class Society extends _i1.SerializableEntity {
   Society({
@@ -22,6 +23,8 @@ class Society extends _i1.SerializableEntity {
     required this.latitude,
     required this.longitude,
     required this.landmark,
+    this.address,
+    this.rooms,
   });
 
   factory Society.fromJson(
@@ -52,9 +55,16 @@ class Society extends _i1.SerializableEntity {
           .deserialize<double>(jsonSerialization['longitude']),
       landmark: serializationManager
           .deserialize<String>(jsonSerialization['landmark']),
+      address: serializationManager
+          .deserialize<_i2.Address?>(jsonSerialization['address']),
+      rooms: serializationManager
+          .deserialize<List<_i2.Rooms>?>(jsonSerialization['rooms']),
     );
   }
 
+  /// The database id, set if the object has been inserted into the
+  /// database or if it has been fetched from the database. Otherwise,
+  /// the id will be null.
   int? id;
 
   String socName;
@@ -79,6 +89,10 @@ class Society extends _i1.SerializableEntity {
 
   String landmark;
 
+  _i2.Address? address;
+
+  List<_i2.Rooms>? rooms;
+
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -94,6 +108,8 @@ class Society extends _i1.SerializableEntity {
       'latitude': latitude,
       'longitude': longitude,
       'landmark': landmark,
+      'address': address,
+      'rooms': rooms,
     };
   }
 }
