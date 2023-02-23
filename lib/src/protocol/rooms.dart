@@ -23,9 +23,6 @@ class Rooms extends _i1.SerializableEntity {
     required this.isOccupied,
     required this.totalMembers,
     required this.roomExist,
-    required this.ownerId,
-    required this.membersId,
-    required this.rentalId,
   });
 
   factory Rooms.fromJson(
@@ -56,12 +53,6 @@ class Rooms extends _i1.SerializableEntity {
           .deserialize<int>(jsonSerialization['totalMembers']),
       roomExist: serializationManager
           .deserialize<bool>(jsonSerialization['roomExist']),
-      ownerId:
-          serializationManager.deserialize<int>(jsonSerialization['ownerId']),
-      membersId: serializationManager
-          .deserialize<List<int>>(jsonSerialization['membersId']),
-      rentalId: serializationManager
-          .deserialize<List<int>>(jsonSerialization['rentalId']),
     );
   }
 
@@ -94,12 +85,6 @@ class Rooms extends _i1.SerializableEntity {
 
   bool roomExist;
 
-  int ownerId;
-
-  List<int> membersId;
-
-  List<int> rentalId;
-
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -116,9 +101,6 @@ class Rooms extends _i1.SerializableEntity {
       'isOccupied': isOccupied,
       'totalMembers': totalMembers,
       'roomExist': roomExist,
-      'ownerId': ownerId,
-      'membersId': membersId,
-      'rentalId': rentalId,
     };
   }
 }

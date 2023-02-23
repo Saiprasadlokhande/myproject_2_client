@@ -13,13 +13,14 @@ import 'package:myproject_2_client/src/protocol/area.dart' as _i4;
 import 'package:myproject_2_client/src/protocol/city.dart' as _i5;
 import 'package:myproject_2_client/src/protocol/country.dart' as _i6;
 import 'package:myproject_2_client/src/protocol/district.dart' as _i7;
-import 'package:myproject_2_client/src/protocol/rooms.dart' as _i8;
-import 'package:myproject_2_client/src/protocol/society.dart' as _i9;
-import 'package:myproject_2_client/src/protocol/state.dart' as _i10;
-import 'package:myproject_2_client/src/protocol/members.dart' as _i11;
-import 'package:serverpod_auth_client/module.dart' as _i12;
-import 'dart:io' as _i13;
-import 'protocol.dart' as _i14;
+import 'package:myproject_2_client/src/protocol/members.dart' as _i8;
+import 'package:myproject_2_client/src/protocol/user_room.dart' as _i9;
+import 'package:myproject_2_client/src/protocol/rooms.dart' as _i10;
+import 'package:myproject_2_client/src/protocol/society.dart' as _i11;
+import 'package:myproject_2_client/src/protocol/state.dart' as _i12;
+import 'package:serverpod_auth_client/module.dart' as _i13;
+import 'dart:io' as _i14;
+import 'protocol.dart' as _i15;
 
 class _EndpointAddress extends _i1.EndpointRef {
   _EndpointAddress(_i1.EndpointCaller caller) : super(caller);
@@ -217,26 +218,89 @@ class _EndpointDistrict extends _i1.EndpointRef {
       );
 }
 
+class _EndpointRoomMembers extends _i1.EndpointRef {
+  _EndpointRoomMembers(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'roomMembers';
+
+  _i2.Future<bool> updateRequestToJoinRoom(
+    int userRoomId,
+    bool status,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'roomMembers',
+        'updateRequestToJoinRoom',
+        {
+          'userRoomId': userRoomId,
+          'status': status,
+        },
+      );
+
+  _i2.Future<bool> addMembersToShop(_i8.Members member) =>
+      caller.callServerEndpoint<bool>(
+        'roomMembers',
+        'addMembersToShop',
+        {'member': member},
+      );
+
+  _i2.Future<List<_i8.Members?>> getUserRoomMembers({required int roomId}) =>
+      caller.callServerEndpoint<List<_i8.Members?>>(
+        'roomMembers',
+        'getUserRoomMembers',
+        {'roomId': roomId},
+      );
+
+  _i2.Future<bool> updateMembersDetails(_i8.Members member) =>
+      caller.callServerEndpoint<bool>(
+        'roomMembers',
+        'updateMembersDetails',
+        {'member': member},
+      );
+
+  _i2.Future<bool> deleteMembersFromRoom(_i9.UserRoom userRoom) =>
+      caller.callServerEndpoint<bool>(
+        'roomMembers',
+        'deleteMembersFromRoom',
+        {'userRoom': userRoom},
+      );
+
+  _i2.Future<List<_i9.UserRoom?>> findMembers({String? searchString}) =>
+      caller.callServerEndpoint<List<_i9.UserRoom?>>(
+        'roomMembers',
+        'findMembers',
+        {'searchString': searchString},
+      );
+}
+
 class _EndpointRooms extends _i1.EndpointRef {
   _EndpointRooms(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'rooms';
 
-  _i2.Future<List<_i8.Rooms>> getRooms({String? keyword}) =>
-      caller.callServerEndpoint<List<_i8.Rooms>>(
+  _i2.Future<List<_i10.Rooms>> getRooms({String? keyword}) =>
+      caller.callServerEndpoint<List<_i10.Rooms>>(
         'rooms',
         'getRooms',
         {'keyword': keyword},
       );
 
-  _i2.Future<bool> addRooms(_i8.Rooms rooms) => caller.callServerEndpoint<bool>(
+  _i2.Future<List<_i10.Rooms>> getAllRooms({int? socId}) =>
+      caller.callServerEndpoint<List<_i10.Rooms>>(
+        'rooms',
+        'getAllRooms',
+        {'socId': socId},
+      );
+
+  _i2.Future<bool> addRooms(_i10.Rooms rooms) =>
+      caller.callServerEndpoint<bool>(
         'rooms',
         'addRooms',
         {'rooms': rooms},
       );
 
-  _i2.Future<bool> updateRooms(_i8.Rooms room) =>
+  _i2.Future<bool> updateRooms(_i10.Rooms room) =>
       caller.callServerEndpoint<bool>(
         'rooms',
         'updateRooms',
@@ -256,21 +320,21 @@ class _EndpointSociety extends _i1.EndpointRef {
   @override
   String get name => 'society';
 
-  _i2.Future<bool> addSociety(_i9.Society society) =>
+  _i2.Future<bool> addSociety(_i11.Society society) =>
       caller.callServerEndpoint<bool>(
         'society',
         'addSociety',
         {'society': society},
       );
 
-  _i2.Future<List<_i9.Society>> getSociety({String? keyword}) =>
-      caller.callServerEndpoint<List<_i9.Society>>(
+  _i2.Future<List<_i11.Society>> getSociety({String? keyword}) =>
+      caller.callServerEndpoint<List<_i11.Society>>(
         'society',
         'getSociety',
         {'keyword': keyword},
       );
 
-  _i2.Future<bool> updateSociety(_i9.Society society) =>
+  _i2.Future<bool> updateSociety(_i11.Society society) =>
       caller.callServerEndpoint<bool>(
         'society',
         'updateSociety',
@@ -290,18 +354,18 @@ class _EndpointState extends _i1.EndpointRef {
   @override
   String get name => 'state';
 
-  _i2.Future<bool> addState(_i10.States state) =>
+  _i2.Future<bool> addState(_i12.States state) =>
       caller.callServerEndpoint<bool>(
         'state',
         'addState',
         {'state': state},
       );
 
-  _i2.Future<List<_i10.States>> getState(
+  _i2.Future<List<_i12.States>> getState(
     int countryId, {
     String? keyword,
   }) =>
-      caller.callServerEndpoint<List<_i10.States>>(
+      caller.callServerEndpoint<List<_i12.States>>(
         'state',
         'getState',
         {
@@ -310,7 +374,7 @@ class _EndpointState extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<bool> updateState(_i10.States state) =>
+  _i2.Future<bool> updateState(_i12.States state) =>
       caller.callServerEndpoint<bool>(
         'state',
         'updateState',
@@ -330,21 +394,21 @@ class _EndpointMembers extends _i1.EndpointRef {
   @override
   String get name => 'members';
 
-  _i2.Future<List<_i11.Members>> getMembers({String? keyword}) =>
-      caller.callServerEndpoint<List<_i11.Members>>(
+  _i2.Future<List<_i8.Members>> getMembers({String? keyword}) =>
+      caller.callServerEndpoint<List<_i8.Members>>(
         'members',
         'getMembers',
         {'keyword': keyword},
       );
 
-  _i2.Future<bool> addMembers(_i11.Members users) =>
+  _i2.Future<bool> addMembers(_i8.Members users) =>
       caller.callServerEndpoint<bool>(
         'members',
         'addMembers',
         {'users': users},
       );
 
-  _i2.Future<bool> updateMembers(_i11.Members user) =>
+  _i2.Future<bool> updateMembers(_i8.Members user) =>
       caller.callServerEndpoint<bool>(
         'members',
         'updateMembers',
@@ -358,22 +422,82 @@ class _EndpointMembers extends _i1.EndpointRef {
       );
 }
 
+class _EndpointUserRoom extends _i1.EndpointRef {
+  _EndpointUserRoom(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'userRoom';
+
+  _i2.Future<List<_i9.UserRoom>> getUserRoom() =>
+      caller.callServerEndpoint<List<_i9.UserRoom>>(
+        'userRoom',
+        'getUserRoom',
+        {},
+      );
+
+  _i2.Future<bool> sendRequestToJoinRoom({required int roomId}) =>
+      caller.callServerEndpoint<bool>(
+        'userRoom',
+        'sendRequestToJoinRoom',
+        {'roomId': roomId},
+      );
+
+  _i2.Future<bool> updateRequestToJoinRoom(
+    int userRoomId,
+    bool status,
+  ) =>
+      caller.callServerEndpoint<bool>(
+        'userRoom',
+        'updateRequestToJoinRoom',
+        {
+          'userRoomId': userRoomId,
+          'status': status,
+        },
+      );
+
+  _i2.Future<bool> addUserRoom(_i9.UserRoom rooms) =>
+      caller.callServerEndpoint<bool>(
+        'userRoom',
+        'addUserRoom',
+        {'rooms': rooms},
+      );
+
+  _i2.Future<bool> updateUserRoom(_i9.UserRoom room) =>
+      caller.callServerEndpoint<bool>(
+        'userRoom',
+        'updateUserRoom',
+        {'room': room},
+      );
+
+  _i2.Future<bool> deleteUserRooms(int id) => caller.callServerEndpoint<bool>(
+        'userRoom',
+        'deleteUserRooms',
+        {'id': id},
+      );
+
+  _i2.Future<bool> deleteUserRoomsss(int id) => caller.callServerEndpoint<bool>(
+        'userRoom',
+        'deleteUserRoomsss',
+        {'id': id},
+      );
+}
+
 class _Modules {
   _Modules(Client client) {
-    auth = _i12.Caller(client);
+    auth = _i13.Caller(client);
   }
 
-  late final _i12.Caller auth;
+  late final _i13.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
   Client(
     String host, {
-    _i13.SecurityContext? context,
+    _i14.SecurityContext? context,
     _i1.AuthenticationKeyManager? authenticationKeyManager,
   }) : super(
           host,
-          _i14.Protocol(),
+          _i15.Protocol(),
           context: context,
           authenticationKeyManager: authenticationKeyManager,
         ) {
@@ -382,10 +506,12 @@ class Client extends _i1.ServerpodClient {
     city = _EndpointCity(this);
     country = _EndpointCountry(this);
     district = _EndpointDistrict(this);
+    roomMembers = _EndpointRoomMembers(this);
     rooms = _EndpointRooms(this);
     society = _EndpointSociety(this);
     state = _EndpointState(this);
     members = _EndpointMembers(this);
+    userRoom = _EndpointUserRoom(this);
     modules = _Modules(this);
   }
 
@@ -399,6 +525,8 @@ class Client extends _i1.ServerpodClient {
 
   late final _EndpointDistrict district;
 
+  late final _EndpointRoomMembers roomMembers;
+
   late final _EndpointRooms rooms;
 
   late final _EndpointSociety society;
@@ -406,6 +534,8 @@ class Client extends _i1.ServerpodClient {
   late final _EndpointState state;
 
   late final _EndpointMembers members;
+
+  late final _EndpointUserRoom userRoom;
 
   late final _Modules modules;
 
@@ -416,10 +546,12 @@ class Client extends _i1.ServerpodClient {
         'city': city,
         'country': country,
         'district': district,
+        'roomMembers': roomMembers,
         'rooms': rooms,
         'society': society,
         'state': state,
         'members': members,
+        'userRoom': userRoom,
       };
   @override
   Map<String, _i1.ModuleEndpointCaller> get moduleLookup =>

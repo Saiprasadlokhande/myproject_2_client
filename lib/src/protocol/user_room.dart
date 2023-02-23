@@ -7,6 +7,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 class UserRoom extends _i1.SerializableEntity {
   UserRoom({
@@ -15,10 +16,12 @@ class UserRoom extends _i1.SerializableEntity {
     required this.userId,
     required this.roomId,
     required this.fromDate,
-    required this.toDate,
-    required this.ownership,
+    this.toDate,
+    required this.isOwner,
     required this.isResident,
     required this.isRental,
+    required this.userRoomStatus,
+    this.roomDetails,
   });
 
   factory UserRoom.fromJson(
@@ -35,13 +38,17 @@ class UserRoom extends _i1.SerializableEntity {
       fromDate: serializationManager
           .deserialize<DateTime>(jsonSerialization['fromDate']),
       toDate: serializationManager
-          .deserialize<DateTime>(jsonSerialization['toDate']),
-      ownership: serializationManager
-          .deserialize<bool>(jsonSerialization['ownership']),
+          .deserialize<DateTime?>(jsonSerialization['toDate']),
+      isOwner:
+          serializationManager.deserialize<bool>(jsonSerialization['isOwner']),
       isResident: serializationManager
           .deserialize<bool>(jsonSerialization['isResident']),
       isRental:
           serializationManager.deserialize<bool>(jsonSerialization['isRental']),
+      userRoomStatus: serializationManager
+          .deserialize<bool>(jsonSerialization['userRoomStatus']),
+      roomDetails: serializationManager
+          .deserialize<_i2.Rooms?>(jsonSerialization['roomDetails']),
     );
   }
 
@@ -58,13 +65,17 @@ class UserRoom extends _i1.SerializableEntity {
 
   DateTime fromDate;
 
-  DateTime toDate;
+  DateTime? toDate;
 
-  bool ownership;
+  bool isOwner;
 
   bool isResident;
 
   bool isRental;
+
+  bool userRoomStatus;
+
+  _i2.Rooms? roomDetails;
 
   @override
   Map<String, dynamic> toJson() {
@@ -75,9 +86,11 @@ class UserRoom extends _i1.SerializableEntity {
       'roomId': roomId,
       'fromDate': fromDate,
       'toDate': toDate,
-      'ownership': ownership,
+      'isOwner': isOwner,
       'isResident': isResident,
       'isRental': isRental,
+      'userRoomStatus': userRoomStatus,
+      'roomDetails': roomDetails,
     };
   }
 }

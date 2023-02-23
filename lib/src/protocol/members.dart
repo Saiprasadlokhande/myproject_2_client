@@ -7,6 +7,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'protocol.dart' as _i2;
 
 class Members extends _i1.SerializableEntity {
   Members({
@@ -22,6 +23,9 @@ class Members extends _i1.SerializableEntity {
     required this.mobileModel,
     required this.status,
     required this.isActive,
+    this.rooms,
+    this.post,
+    this.deviceId,
   });
 
   factory Members.fromJson(
@@ -49,6 +53,12 @@ class Members extends _i1.SerializableEntity {
           serializationManager.deserialize<bool>(jsonSerialization['status']),
       isActive:
           serializationManager.deserialize<bool>(jsonSerialization['isActive']),
+      rooms: serializationManager
+          .deserialize<List<_i2.Rooms>?>(jsonSerialization['rooms']),
+      post:
+          serializationManager.deserialize<String?>(jsonSerialization['post']),
+      deviceId: serializationManager
+          .deserialize<String?>(jsonSerialization['deviceId']),
     );
   }
 
@@ -79,6 +89,12 @@ class Members extends _i1.SerializableEntity {
 
   bool isActive;
 
+  List<_i2.Rooms>? rooms;
+
+  String? post;
+
+  String? deviceId;
+
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -94,6 +110,9 @@ class Members extends _i1.SerializableEntity {
       'mobileModel': mobileModel,
       'status': status,
       'isActive': isActive,
+      'rooms': rooms,
+      'post': post,
+      'deviceId': deviceId,
     };
   }
 }
