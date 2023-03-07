@@ -14,10 +14,11 @@ class Members extends _i1.SerializableEntity {
     this.id,
     required this.name,
     required this.age,
+    required this.userId,
     required this.mobile,
     required this.email,
     required this.aadharNo,
-    required this.panNo,
+    this.isAadharVerified,
     required this.dob,
     required this.blockCount,
     required this.mobileModel,
@@ -36,15 +37,17 @@ class Members extends _i1.SerializableEntity {
       id: serializationManager.deserialize<int?>(jsonSerialization['id']),
       name: serializationManager.deserialize<String>(jsonSerialization['name']),
       age: serializationManager.deserialize<int>(jsonSerialization['age']),
+      userId:
+          serializationManager.deserialize<int>(jsonSerialization['userId']),
       mobile:
           serializationManager.deserialize<String>(jsonSerialization['mobile']),
       email:
           serializationManager.deserialize<String>(jsonSerialization['email']),
       aadharNo: serializationManager
           .deserialize<String>(jsonSerialization['aadharNo']),
-      panNo:
-          serializationManager.deserialize<String>(jsonSerialization['panNo']),
-      dob: serializationManager.deserialize<DateTime>(jsonSerialization['dob']),
+      isAadharVerified: serializationManager
+          .deserialize<bool?>(jsonSerialization['isAadharVerified']),
+      dob: serializationManager.deserialize<String>(jsonSerialization['dob']),
       blockCount: serializationManager
           .deserialize<int>(jsonSerialization['blockCount']),
       mobileModel: serializationManager
@@ -71,15 +74,17 @@ class Members extends _i1.SerializableEntity {
 
   int age;
 
+  int userId;
+
   String mobile;
 
   String email;
 
   String aadharNo;
 
-  String panNo;
+  bool? isAadharVerified;
 
-  DateTime dob;
+  String dob;
 
   int blockCount;
 
@@ -101,10 +106,11 @@ class Members extends _i1.SerializableEntity {
       'id': id,
       'name': name,
       'age': age,
+      'userId': userId,
       'mobile': mobile,
       'email': email,
       'aadharNo': aadharNo,
-      'panNo': panNo,
+      'isAadharVerified': isAadharVerified,
       'dob': dob,
       'blockCount': blockCount,
       'mobileModel': mobileModel,

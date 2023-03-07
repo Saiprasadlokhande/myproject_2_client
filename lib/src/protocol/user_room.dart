@@ -22,6 +22,8 @@ class UserRoom extends _i1.SerializableEntity {
     required this.isRental,
     required this.userRoomStatus,
     this.roomDetails,
+    this.societyDetails,
+    this.address,
   });
 
   factory UserRoom.fromJson(
@@ -49,6 +51,10 @@ class UserRoom extends _i1.SerializableEntity {
           .deserialize<bool>(jsonSerialization['userRoomStatus']),
       roomDetails: serializationManager
           .deserialize<_i2.Rooms?>(jsonSerialization['roomDetails']),
+      societyDetails: serializationManager
+          .deserialize<_i2.Society?>(jsonSerialization['societyDetails']),
+      address: serializationManager
+          .deserialize<_i2.Address?>(jsonSerialization['address']),
     );
   }
 
@@ -77,6 +83,10 @@ class UserRoom extends _i1.SerializableEntity {
 
   _i2.Rooms? roomDetails;
 
+  _i2.Society? societyDetails;
+
+  _i2.Address? address;
+
   @override
   Map<String, dynamic> toJson() {
     return {
@@ -91,6 +101,8 @@ class UserRoom extends _i1.SerializableEntity {
       'isRental': isRental,
       'userRoomStatus': userRoomStatus,
       'roomDetails': roomDetails,
+      'societyDetails': societyDetails,
+      'address': address,
     };
   }
 }

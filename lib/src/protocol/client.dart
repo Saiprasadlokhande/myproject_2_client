@@ -394,11 +394,32 @@ class _EndpointMembers extends _i1.EndpointRef {
   @override
   String get name => 'members';
 
+  _i2.Future<bool> addUserToMember({required int userId}) =>
+      caller.callServerEndpoint<bool>(
+        'members',
+        'addUserToMember',
+        {'userId': userId},
+      );
+
+  _i2.Future<_i8.Members?> getMemberDetailsByUserId({int? userId}) =>
+      caller.callServerEndpoint<_i8.Members?>(
+        'members',
+        'getMemberDetailsByUserId',
+        {'userId': userId},
+      );
+
   _i2.Future<List<_i8.Members>> getMembers({String? keyword}) =>
       caller.callServerEndpoint<List<_i8.Members>>(
         'members',
         'getMembers',
         {'keyword': keyword},
+      );
+
+  _i2.Future<_i8.Members?> getMembersById({int? userId}) =>
+      caller.callServerEndpoint<_i8.Members?>(
+        'members',
+        'getMembersById',
+        {'userId': userId},
       );
 
   _i2.Future<bool> addMembers(_i8.Members users) =>
